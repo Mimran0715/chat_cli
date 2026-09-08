@@ -1,17 +1,17 @@
 import {ollama} from 'ai-sdk-ollama'
 import {generateText} from 'ai'
 
-type Message = {
+export type Message = {
     role: "user" | "assistant",
     content: string
 }
 
-export async function messageChat(message: string): Promise<Message> {
+export async function messageChat(messages: Message[]): Promise<Message> {
 
     try{
         const {text} = await generateText({
             model: ollama('llama3.1'),
-            prompt: message,
+            messages: messages
         })
         return {role: 'assistant', content: text}
 
